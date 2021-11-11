@@ -1,0 +1,17 @@
+import com.truckitin.buildSrc.Libs
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 31
+}
+dependencies {
+
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.timber
+    implementation 'androidx.annotation:annotation:1.2.0'
+
+}

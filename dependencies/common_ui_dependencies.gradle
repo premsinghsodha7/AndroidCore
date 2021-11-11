@@ -1,0 +1,148 @@
+import com.truckitin.buildSrc.Config
+import com.truckitin.buildSrc.Libs
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'kotlin-parcelize'
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
+android {
+    compileSdkVersion Config.compileSdk
+    buildToolsVersion Config.buildTools
+
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+
+        staging {
+            initWith debug
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+        dataBinding true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Libs.Compose.compose_version
+    }
+
+    hilt {
+        enableExperimentalClasspathAggregation = true
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation Libs.Kotlin.stdlib
+    api project(':base')
+    // Coroutines
+    implementation Libs.Coroutines.android
+    //UI
+    implementation Libs.AndroidX.AppCompat.appcompat
+    implementation Libs.AndroidX.RecyclerView.recyclerview
+    implementation Libs.AndroidX.MaterialDesign.material
+    implementation Libs.AndroidX.ConstraintLayout.constraintlayout
+
+    //  Kotlin Extensions for LifeCycle Architecture Components
+    implementation Libs.AndroidX.Lifecycle.runtime
+    implementation Libs.AndroidX.Lifecycle.livedata
+    implementation Libs.AndroidX.Lifecycle.viewmodel
+    implementation Libs.AndroidX.Lifecycle.service
+    implementation Libs.AndroidX.Hilt.viewmodel
+    kapt Libs.AndroidX.Hilt.compiler
+
+    // Navigation
+    implementation Libs.AndroidX.Navigation.fragment
+    implementation Libs.AndroidX.Navigation.navigationUIKtx
+    implementation Libs.AndroidX.Navigation.hiltNavigation
+
+    //Room
+    implementation Libs.AndroidX.Room.roomRuntime
+    implementation Libs.AndroidX.Room.roomKtx
+    kapt Libs.AndroidX.Room.compiler
+
+    //WorkManager
+    implementation Libs.AndroidX.Work.workRuntime
+    implementation Libs.AndroidX.Hilt.workManager
+
+    // DI- Hilt
+    implementation Libs.Hilt.android
+    kapt Libs.Hilt.compiler
+
+    // Image loading library
+    implementation Libs.coil
+
+    //Gson for serializing deserializing objects
+    implementation Libs.gson
+
+    //sdp
+    implementation Libs.sdp
+
+    //timber
+    implementation Libs.timber
+
+    //swipe refresh
+    implementation Libs.swipeRefresh
+    implementation Libs.expandable
+
+    // Chuck interceptor
+    debugImplementation Libs.chuckInterceptor
+    stagingImplementation Libs.chuckInterceptor
+    releaseImplementation Libs.chuckInterceptorRelease
+
+    // JUnit/ Mockito Test
+    testImplementation Libs.junit
+    testImplementation Libs.mockitoKotlin
+    testImplementation Libs.mockitoInline
+    testImplementation Libs.gson
+
+    //AndroidX Test
+    testImplementation Libs.AndroidX.Test.Ext.junit
+    testImplementation Libs.AndroidX.Lifecycle.test
+    testImplementation Libs.Coroutines.test
+
+    androidTestImplementation Libs.Hilt.testing
+    androidTestImplementation Libs.AndroidX.Test.truth
+    androidTestImplementation Libs.AndroidX.Test.core
+    androidTestImplementation Libs.AndroidX.Test.Ext.junit
+    androidTestImplementation Libs.AndroidX.Test.rules
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.AndroidX.Test.espressoCore
+    androidTestImplementation Libs.AndroidX.Navigation.navigationTest
+
+    implementation Libs.Compose.composeMaterial
+    implementation Libs.Compose.composeMaterialIcons
+    implementation Libs.Compose.composeVm
+    implementation Libs.Compose.composeActivity
+    implementation Libs.Compose.composeAnimation
+    debugImplementation Libs.Compose.composeTooling
+    implementation Libs.Compose.composeToolingPrev
+    implementation Libs.Compose.composeUI
+    implementation Libs.Compose.composeNavigation
+    implementation Libs.Compose.composeNavigationHilt
+    implementation Libs.Compose.composeConstraintlayout
+    implementation Libs.Compose.composeSwipeRefresh
+    androidTestImplementation Libs.Compose.composeTest
+
+}
